@@ -14,10 +14,6 @@ public class Graph {
 	private Map<Node, AdjecencyList> adjecencyListsMap = new HashMap<Node, AdjecencyList>();
 	private int edgesCount = 0;
 
-	public int getNodesCount() {
-		return adjecencyListsMap.size();
-	}
-
 	public void addEdge(Edge edge) {
 		if(adjecencyListsMap.get(edge.getFirstNode()) == null || adjecencyListsMap.get(edge.getSecondNode()) == null) {
 			throw new IllegalStateException("Cannot add edge for nodes which are not in the graph");
@@ -27,13 +23,27 @@ public class Graph {
 		adjecencyListsMap.get(edge.getSecondNode()).addNode(edge.getFirstNode());
 		++edgesCount;
 	}
-	
+
+	/**
+	 * Adds new node or does nothing if node is already added
+	 * @param node
+	 */
 	public void addNode(Node node) {
-		adjecencyListsMap.put(node, new AdjecencyList());
+		if(!adjecencyListsMap.containsKey(node)) {
+			adjecencyListsMap.put(node, new AdjecencyList());
+		}
+	}
+	
+	public boolean areNodesAdjectent(Node firstNode, Node secondNode) {
+		return getAdjecencyListForNode(firstNode).getNodes().contains(secondNode);
 	}
 	
 	public AdjecencyList getAdjecencyListForNode(Node node) {
 		return adjecencyListsMap.get(node);
+	}
+	
+	public int getAdjecencyListSizeForNode(Node node) {
+		return getAdjecencyListForNode(node).getNodes().size();
 	}
 	
 	public int getEdgesCount() {
@@ -44,8 +54,18 @@ public class Graph {
 		return adjecencyListsMap.keySet();
 	}
 	
+	public int getNodesCount() {
+		return adjecencyListsMap.size();
+	}
+	
 	public Node getRandomNode() {
 		int nodeNumber = new Random().nextInt(getNodesCount());
 		return new ArrayList<Node>(getNodes()).get(nodeNumber);
 	}
+	
+	@Override
+	public String toString() {
+		return adjecencyListsMap.toString();
+	}
+	
 }

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import pl.mczpk.gis.graph.model.Node;
+import pl.mczpk.gis.util.GraphUtils;
 
 public class RandomGraphFactoryTest extends GraphFactoryTestBase {
 	
@@ -12,43 +13,50 @@ public class RandomGraphFactoryTest extends GraphFactoryTestBase {
 	
 	@Test
 	public void testGeneratedFullGraph() {
-		Graph generatedGraph = testee.getGraph(1000, 1.0f);
+		int edgesCount = 10;
+		Graph generatedGraph = testee.getGraph(edgesCount, GraphUtils.getEdgesCountInFullGraph(edgesCount));
 		
-		assertEquals(1000, generatedGraph.getNodesCount());
-		assertEdgesCountForFullGraph(generatedGraph);
+		assertEquals(edgesCount, generatedGraph.getNodesCount());
+		assertEquals(GraphUtils.getEdgesCountInFullGraph(edgesCount), generatedGraph.getEdgesCount());
 
 		for(Node node: generatedGraph.getNodes()) {
-			assertEquals(999, generatedGraph.getAdjecencyListForNode(node).getNodes().size());
-			assertFalse(generatedGraph.getAdjecencyListForNode(node).getNodes().contains(node));
+			assertEquals(edgesCount - 1, generatedGraph.getAdjecencyListForNode(node).getNodes().size());
+			assertFalse(generatedGraph.areNodesAdjectent(node, node));
 		}
 	}
 	
 	@Test
-	public void testGeneratedGraphWithoutEdges() {
-		Graph generatedGraph = testee.getGraph(1000, 0.0f);
+	public void testGeneratedTree() {
+		int edgesCount = 10;
+		Graph generatedGraph = testee.getGraph(edgesCount, GraphUtils.getEdgesCountInTree(edgesCount));
 		
-		assertEquals(1000, generatedGraph.getNodesCount());
-		assertEquals(0, generatedGraph.getEdgesCount());
-		for(Node node: generatedGraph.getNodes()) {
-			assertEquals(0, generatedGraph.getAdjecencyListForNode(node).getNodes().size());	
-		}
+		assertEquals(edgesCount, generatedGraph.getNodesCount());
+		assertEquals(GraphUtils.getEdgesCountInTree(edgesCount), generatedGraph.getEdgesCount());
+	}
+	
+	@SuppressWarnings("unused")
+	@Test (expected = IllegalArgumentException.class)
+	public void testGenerateForTooFewEdges() {
+		Graph generatedGraph = testee.getGraph(10, GraphUtils.getEdgesCountInTree(10) - 1);
+		
+	}
+	
+	@SuppressWarnings("unused")
+	@Test (expected = IllegalArgumentException.class)
+	public void testGenerateForTooManyEdges() {
+		Graph generatedGraph = testee.getGraph(10, GraphUtils.getEdgesCountInFullGraph(10) + 1);
 	}
 	
 	@Test
-	public void testGeneratedGraphWithoutNodes() {
-		Graph generatedGraph = testee.getGraph(0, 0.0f);
+	public void testGeneratedGraphStructure() {
+		Graph generatedGraph = testee.getGraph(10, 30);
 		
-		assertEquals(0, generatedGraph.getNodesCount());
-	}
-	
-	@Test
-	public void testGeneratedGraphWithRandomEdges() {
-		Graph generatedGraph = testee.getGraph(1000, 0.5f);
+		assertEquals(10, generatedGraph.getNodesCount());
+		assertEquals(30, generatedGraph.getEdgesCount());
 		
-		assertEquals(1000, generatedGraph.getNodesCount());
 		for(Node node: generatedGraph.getNodes()) {
 			for(Node adjecentNode: generatedGraph.getAdjecencyListForNode(node).getNodes()) {
-				assertTrue(generatedGraph.getAdjecencyListForNode(adjecentNode).getNodes().contains(node));
+				assertTrue(generatedGraph.areNodesAdjectent(node, adjecentNode));
 			}
 		}
 	}

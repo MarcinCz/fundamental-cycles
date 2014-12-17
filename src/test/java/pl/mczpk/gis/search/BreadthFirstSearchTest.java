@@ -13,7 +13,7 @@ public class BreadthFirstSearchTest extends GraphSearchTestBase {
 	@Test
 	public void testRandomGraph() {
 		for(int i = 0; i < 10; ++i) {
-			Graph graph = RandomGraphFactory.getInstance().getGraph(100, 0.5f);
+			Graph graph = RandomGraphFactory.getInstance().getGraph(100, 150);
 			
 			GraphSearchResult searchResult = testee.searchGraph(graph, graph.getRandomNode());
 			

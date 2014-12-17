@@ -13,4 +13,9 @@ public class AdjecencyList {
 	public void addNode(Node node) {
 		this.nodes.add(node);
 	}
+	
+	@Override
+	public String toString() {
+		return nodes.toString();
+	}
 }

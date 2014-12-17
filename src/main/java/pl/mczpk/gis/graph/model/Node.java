@@ -43,5 +43,9 @@ public class Node {
 	public void setState(NodeState state) {
 		this.state = state;
 	}
-
+	
+	@Override
+	public String toString() {
+		return id;
+	}
 }

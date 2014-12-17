@@ -35,6 +35,10 @@ public class BreadthFirstSearch extends AbstractGraphSearch implements GraphSear
 	}
 
 	private void visitNode(Node node, Node parentNode) {
+		if(parentNode.getParent().equals(node)) {
+			return;
+		}
+		
 		if (node.getState().equals(NodeState.NOT_VISITIED)) {
 			markNodeAsVisitedFromParentNode(node, parentNode);
 			queue.add(node);
