@@ -8,11 +8,12 @@ import pl.mczpk.gis.search.model.GraphSearchResult;
 
 public abstract class AbstractGraphSearch {
 
+	protected final static int ROOT_NODE_LEVEL = 0;
 	protected GraphSearchResult searchResult;
 
 	protected void prepareStartingNode(Node startingNode) {
 		startingNode.setState(NodeState.VISITED);
-		startingNode.setLevel(0);
+		startingNode.setLevel(ROOT_NODE_LEVEL);
 		startingNode.setParent(startingNode);
 	}
 
