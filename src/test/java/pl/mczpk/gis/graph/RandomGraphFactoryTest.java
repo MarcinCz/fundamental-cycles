@@ -34,17 +34,15 @@ public class RandomGraphFactoryTest extends GraphFactoryTestBase {
 		assertEquals(GraphUtils.getEdgesCountInTree(edgesCount), generatedGraph.getEdgesCount());
 	}
 	
-	@SuppressWarnings("unused")
 	@Test (expected = IllegalArgumentException.class)
 	public void testGenerateForTooFewEdges() {
-		Graph generatedGraph = testee.getGraph(10, GraphUtils.getEdgesCountInTree(10) - 1);
+		testee.getGraph(10, GraphUtils.getEdgesCountInTree(10) - 1);
 		
 	}
 	
-	@SuppressWarnings("unused")
 	@Test (expected = IllegalArgumentException.class)
 	public void testGenerateForTooManyEdges() {
-		Graph generatedGraph = testee.getGraph(10, GraphUtils.getEdgesCountInFullGraph(10) + 1);
+		testee.getGraph(10, GraphUtils.getEdgesCountInFullGraph(10) + 1);
 	}
 	
 	@Test

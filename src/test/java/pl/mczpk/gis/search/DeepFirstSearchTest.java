@@ -1,12 +1,11 @@
 package pl.mczpk.gis.search;
 
 
-public class BreadthFirstSearchTest extends GraphSearchTestBase {
+public class DeepFirstSearchTest extends GraphSearchTestBase {
 
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		testee = new BreadthFirstSearch();
+		testee = new DeepFirstSearch();
 	}
-	
 }
