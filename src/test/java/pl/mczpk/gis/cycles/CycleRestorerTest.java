@@ -5,6 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+import org.junit.Before;
 import org.junit.Test;
 
 import pl.mczpk.gis.graph.model.Edge;
@@ -29,6 +32,7 @@ public class CycleRestorerTest {
 		
 		assertEquals(1, cycles.size());
 		assertCycleIsEqualToGivenNodes(cycles.get(0), n1, n2, n3, n6, n5, n4);
+		System.out.println("Restored cycle " + cycles.get(0));
 	}
 
 	public List<Edge> getEdges() {
