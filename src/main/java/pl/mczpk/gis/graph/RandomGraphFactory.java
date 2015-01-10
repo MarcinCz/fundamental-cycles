@@ -45,10 +45,29 @@ public class RandomGraphFactory {
 		return graph;
 	}
 	
+	public Graph getGraph(int nodesToGenerate, float probabilityOfEdge) {
+		verifyParameters(nodesToGenerate, probabilityOfEdge);
+		
+		Graph graph = new Graph();
+		
+		addNodesToGraph(graph, nodesToGenerate);
+		generateSpanningTree(graph);
+		generateRandomEdgesNotInTree(graph, probabilityOfEdge);
+		
+		logger.debug("Random graph generated: \n" + graph);
+		return graph;
+	}
+	
 
 	private void verifyParameters(int nodesToGenerate, int edgesToGenerate) {
 		if(edgesToGenerate > GraphUtils.getEdgesCountInFullGraph(nodesToGenerate) || edgesToGenerate < GraphUtils.getEdgesCountInTree(nodesToGenerate)) {
 			throw new IllegalArgumentException("Can't create connected graph for " + nodesToGenerate + " nodes and " + edgesToGenerate + " edges.");
+		}
+	}
+	
+	private void verifyParameters(int nodesToGenerate, float probabilityOfEdge) {
+		if(probabilityOfEdge < 0.0 || probabilityOfEdge > 1.0) {
+			throw new IllegalArgumentException("Probability of edge is incorrect.");
 		}
 	}
 	
@@ -103,6 +122,15 @@ public class RandomGraphFactory {
 					graph.addEdge(new Edge(firstNode, secondNode));
 					break;
 				}
+			}
+		}
+	}
+	
+	private void generateRandomEdgesNotInTree(Graph graph, float probabilityOfEdge) {
+		for(Node node : graph.getNodes()){
+			for (Node node2 : graph.getNodes()){
+				if (randomGenerator.nextFloat() < (probabilityOfEdge / 2) && node != node2)
+					graph.addEdge(new Edge(node, node2));
 			}
 		}
 	}

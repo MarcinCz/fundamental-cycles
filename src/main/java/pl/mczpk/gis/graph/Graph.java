@@ -18,6 +18,8 @@ public class Graph {
 		if(adjecencyListsMap.get(edge.getFirstNode()) == null || adjecencyListsMap.get(edge.getSecondNode()) == null) {
 			throw new IllegalStateException("Cannot add edge for nodes which are not in the graph");
 		}
+		if(areNodesAdjectent(edge.getFirstNode(), edge.getSecondNode()))
+			return;
 		
 		adjecencyListsMap.get(edge.getFirstNode()).addNode(edge.getSecondNode());
 		adjecencyListsMap.get(edge.getSecondNode()).addNode(edge.getFirstNode());
