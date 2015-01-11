@@ -1,6 +1,7 @@
 package pl.mczpk.gis.graph.model;
 
 
+
 public class Node {
 
 	private Node parent;
@@ -47,5 +48,15 @@ public class Node {
 	@Override
 	public String toString() {
 		return id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null || !(obj instanceof Node)) {
+			return false;
+		} else {
+			Node node= (Node) obj;
+			return this.id.equals(node.id);
+		}
 	}
 }

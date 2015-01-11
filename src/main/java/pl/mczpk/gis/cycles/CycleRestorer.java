@@ -16,12 +16,12 @@ public class CycleRestorer {
 		List<Cycle> cycles = new ArrayList<Cycle>();
 		
 		for(Edge edge: edges) {
-			cycles.add(restorceCycle(edge)); 
+			cycles.add(restoreCycle(edge)); 
 		}
 		return cycles;
 	}
 
-	private Cycle restorceCycle(Edge edge) {
+	private Cycle restoreCycle(Edge edge) {
 		Cycle cycle = new Cycle();
 		Node firstNode = edge.getFirstNode();
 		Node secondNode = edge.getSecondNode();
@@ -39,14 +39,20 @@ public class CycleRestorer {
 			cycle.addNodeAtEnd(secondNode);
 		}
 		
-		while(secondNode.getParent() != firstNode.getParent()) {
-			firstNode = firstNode.getParent();
-			cycle.addNodeAtFront(firstNode);
-			secondNode = secondNode.getParent();
-			cycle.addNodeAtEnd(secondNode);
+		if(firstNode.equals(secondNode)) {
+			//one of the nodes in the edge was cycle root node
+			cycle.removeNodeAtFront();
+		} else {
+			//still need to find cycle root node
+			while(secondNode.getParent() != firstNode.getParent()) {
+				firstNode = firstNode.getParent();
+				cycle.addNodeAtFront(firstNode);
+				secondNode = secondNode.getParent();
+				cycle.addNodeAtEnd(secondNode);
+			}
+			
+			cycle.addNodeAtFront(firstNode.getParent());
 		}
-		
-		cycle.addNodeAtFront(firstNode.getParent());
 		
 		logger.trace("Restored cycle: " + cycle);
 		return cycle;

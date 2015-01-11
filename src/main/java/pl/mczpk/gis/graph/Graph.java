@@ -56,6 +56,15 @@ public class Graph {
 		return adjecencyListsMap.keySet();
 	}
 	
+	public Node getNodeById(String id) {
+		for(Node node: adjecencyListsMap.keySet()) {
+			if(node.getId().equals(id)) {
+				return node;
+			}
+		}
+		return null;
+	}
+	
 	public int getNodesCount() {
 		return adjecencyListsMap.size();
 	}

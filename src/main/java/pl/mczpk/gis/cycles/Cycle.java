@@ -20,6 +20,14 @@ public class Cycle {
 		nodes.push(node);
 	}
 	
+	public Node getNodeAtFront() {
+		return nodes.getFirst();
+	}
+	
+	public void removeNodeAtFront() {
+		nodes.removeFirst();
+	}
+	
 	@Override
 	public String toString() {
 		return nodes.toString();

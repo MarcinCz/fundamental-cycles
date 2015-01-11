@@ -20,19 +20,32 @@ public class CycleRestorerTest {
 	private final Node n4 = new Node("4");
 	private final Node n5 = new Node("5");
 	private final Node n6 = new Node("6");
+	private final Node n7 = new Node("7");
+
 	
 	@Test
-	public void testForOneCycle() {
-		List<Edge> edges = getEdges();
+	public void testForOneCycleFromTwoLines() {
+		List<Edge> edges = getEdgesTwoLines();
 		
 		List<Cycle> cycles = testee.restoreCycles(edges);
 		
 		assertEquals(1, cycles.size());
-		assertCycleIsEqualToGivenNodes(cycles.get(0), n1, n2, n3, n6, n5, n4);
 		System.out.println("Restored cycle " + cycles.get(0));
+		assertCycleIsEqualToGivenNodes(cycles.get(0), n1, n2, n3, n6, n5, n4);
+	}
+	
+	@Test
+	public void testForOneCycleFromOneLine() {
+		List<Edge> edges = getEdgesOneLine();
+		
+		List<Cycle> cycles = testee.restoreCycles(edges);
+		
+		assertEquals(1, cycles.size());
+		System.out.println("Restored cycle " + cycles.get(0));
+		assertCycleIsEqualToGivenNodes(cycles.get(0), n2, n3, n4, n1);
 	}
 
-	public List<Edge> getEdges() {
+	public List<Edge> getEdgesTwoLines() {
 		
 		setParentLine(n1, n2, n3);
 		setParentLine(n1, n4, n5, n6);
@@ -40,7 +53,15 @@ public class CycleRestorerTest {
 		return Arrays.asList(new Edge(n3, n6));
 	}
 	
+	public List<Edge> getEdgesOneLine() {
+		
+		setParentLine(n1, n2, n3, n4);
+		
+		return Arrays.asList(new Edge(n4, n1));
+	}
+	
 	public void setParentLine(Node... nodes) {
+		nodes[0].setParent(n7);
 		for(int i = 1; i < nodes.length; i++) {
 			nodes[i].setLevel(i);
 			nodes[i].setParent(nodes[i - 1]);
