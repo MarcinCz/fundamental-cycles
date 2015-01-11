@@ -30,7 +30,6 @@ public class App
     	String flags = "";
     	String fileName = "";
     	List<String> ints = new ArrayList<String>(); //1-numberOfNodes, 2-numberOfIterations
-    	String probabilityOfEdge = "";
     	
     	for (int i = 0; i < args.length; ++i){
     		if (args[i].matches("-[a-zA-Z]+"))
@@ -39,8 +38,6 @@ public class App
     			fileName = args[i];
     		else if (args[i].matches("\\d+"))
 				ints.add(args[i]);
-    		else if (args[i].matches("0\\.\\d+"))
-				probabilityOfEdge = args[i];
     	}
     	
     	Graph graph;
@@ -49,21 +46,21 @@ public class App
 		DeepFirstSearch dfs = new DeepFirstSearch();
 		
 		if (!flags.contains("f")){
-			if (ints.size() != 2)
+			if (ints.size() != 3)
 				throw new IllegalStateException("Not enought arguments");
 			if (ints.get(0).equals("") || ints.get(0).equals("0"))
     			throw new IllegalStateException("Number of nodes is incorrect");
 			if (ints.get(1).equals("") || ints.get(1).equals("0"))
     			throw new IllegalStateException("Number of iterations is incorrect");
-    		if (probabilityOfEdge.equals("") || probabilityOfEdge.equals(""))
-    			throw new IllegalStateException("Probability of edge is incorrect");
+    		if (ints.get(1).equals("") || ints.get(1).equals(""))
+    			throw new IllegalStateException("Number of edges is incorrect");
     		
 			 File dir = new File("results");
 			 dir.mkdir();
 			 
 			for(int i = 0; i < Integer.parseInt(ints.get(1)); ++i ){
 				fileName = "results/" + java.lang.System.currentTimeMillis();
-				graph = RandomGraphFactory.getInstance().getGraph(Integer.parseInt(ints.get(0)), Float.parseFloat(probabilityOfEdge));
+				graph = RandomGraphFactory.getInstance().getGraph(Integer.parseInt(ints.get(0)), Integer.parseInt(ints.get(2)));
 				
 				List<Cycle> cyclesBreadth = cr.restoreCycles(bfs.searchGraph(graph, graph.getRandomNode()).getEdgesNotInTree());
 				List<Cycle> cyclesDeep = cr.restoreCycles(dfs.searchGraph(graph, graph.getRandomNode()).getEdgesNotInTree());
