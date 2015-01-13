@@ -2,6 +2,7 @@ package pl.mczpk.gis.search;
 
 import junit.framework.TestCase;
 
+import org.apache.log4j.Logger;
 import org.junit.Test;
 
 import pl.mczpk.gis.IO.GraphReader;
@@ -9,12 +10,13 @@ import pl.mczpk.gis.graph.Graph;
 import pl.mczpk.gis.graph.RandomGraphFactory;
 import pl.mczpk.gis.graph.model.Edge;
 import pl.mczpk.gis.graph.model.Node;
-import pl.mczpk.gis.search.model.GraphSearchResult;
 import pl.mczpk.gis.util.GraphUtils;
 
 public abstract class GraphSearchTestBase extends TestCase {
 	
 	protected GraphSearch testee;
+	
+	private final Logger logger = Logger.getLogger(this.getClass());
 
 	@Test
 	public void testEdgesNotInTreeCount_RandomGraph() {
@@ -22,6 +24,7 @@ public abstract class GraphSearchTestBase extends TestCase {
 			Graph graph = RandomGraphFactory.getInstance().getGraph(100, 150);
 			
 			GraphSearchResult searchResult = testee.searchGraph(graph, graph.getRandomNode());
+			logger.trace(String.format("Random graph search took %s ms", searchResult.getExecutionTime()));
 			
 			assertEquals(GraphUtils.getCyclomaticNumberForGraph(graph), searchResult.getEdgesNotInTree().size());
 		}
@@ -34,11 +37,11 @@ public abstract class GraphSearchTestBase extends TestCase {
 			Node startingNode = graph.getRandomNode();
 			
 			GraphSearchResult searchResult = testee.searchGraph(graph, startingNode);
+			logger.trace(String.format("Random graph search took %s ms", searchResult.getExecutionTime()));
 			
 			for(Edge edgeNotInTree: searchResult.getEdgesNotInTree()) {
 				assertLastParentForNode(edgeNotInTree.getFirstNode(), startingNode);
 				assertLastParentForNode(edgeNotInTree.getSecondNode(), startingNode);
-
 			}
 		}
 	}

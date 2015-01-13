@@ -4,13 +4,25 @@ import pl.mczpk.gis.graph.Graph;
 import pl.mczpk.gis.graph.model.Edge;
 import pl.mczpk.gis.graph.model.Node;
 import pl.mczpk.gis.graph.model.NodeState;
-import pl.mczpk.gis.search.model.GraphSearchResult;
 
-public abstract class AbstractGraphSearch {
+public abstract class AbstractGraphSearch implements GraphSearch {
 
 	protected final static int ROOT_NODE_LEVEL = 0;
 	protected GraphSearchResult searchResult;
 
+	public GraphSearchResult searchGraph(Graph graph, Node startingNode) {
+		long startTime = System.currentTimeMillis();
+		searchResult = new GraphSearchResult();
+		
+		doSearchGraph(graph, startingNode);
+		
+		long endTime = System.currentTimeMillis();
+		searchResult.setExecutionTime(endTime - startTime);
+		return searchResult;
+	}
+	
+	protected abstract void doSearchGraph(Graph graph, Node startingNode);
+	
 	protected void prepareStartingNode(Node startingNode) {
 		startingNode.setState(NodeState.VISITED);
 		startingNode.setLevel(ROOT_NODE_LEVEL);

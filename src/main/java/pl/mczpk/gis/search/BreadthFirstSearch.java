@@ -5,15 +5,13 @@ import java.util.LinkedList;
 import pl.mczpk.gis.graph.Graph;
 import pl.mczpk.gis.graph.model.Node;
 import pl.mczpk.gis.graph.model.NodeState;
-import pl.mczpk.gis.search.model.GraphSearchResult;
 
-public class BreadthFirstSearch extends AbstractGraphSearch implements GraphSearch {
+public class BreadthFirstSearch extends AbstractGraphSearch {
 
 	private LinkedList<Node> queue;
-
-	public GraphSearchResult searchGraph(Graph graph, Node startingNode) {
-		searchResult = new GraphSearchResult();
-
+	
+	@Override
+	protected void doSearchGraph(Graph graph, Node startingNode) {
 		markAllNodesAsNotVisited(graph);
 		prepareStartingNode(startingNode);
 
@@ -24,8 +22,6 @@ public class BreadthFirstSearch extends AbstractGraphSearch implements GraphSear
 			Node node = queue.poll();
 			visitAdjecentNodes(graph, node);
 		}
-
-		return searchResult;
 	}
 
 	private void visitAdjecentNodes(Graph graph, Node node) {

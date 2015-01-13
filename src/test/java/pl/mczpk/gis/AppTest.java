@@ -10,7 +10,7 @@ import pl.mczpk.gis.cycles.CycleRestorer;
 import pl.mczpk.gis.graph.Graph;
 import pl.mczpk.gis.search.BreadthFirstSearch;
 import pl.mczpk.gis.search.DeepFirstSearch;
-import pl.mczpk.gis.search.model.GraphSearchResult;
+import pl.mczpk.gis.search.GraphSearchResult;
 
 public class AppTest 
 {

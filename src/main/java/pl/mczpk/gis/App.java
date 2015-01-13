@@ -13,6 +13,7 @@ import pl.mczpk.gis.graph.Graph;
 import pl.mczpk.gis.graph.RandomGraphFactory;
 import pl.mczpk.gis.search.BreadthFirstSearch;
 import pl.mczpk.gis.search.DeepFirstSearch;
+import pl.mczpk.gis.search.GraphSearchResult;
 import pl.mczpk.gis.util.GraphUtils;
 
 public class App 
@@ -62,8 +63,10 @@ public class App
 				fileName = "results/" + java.lang.System.currentTimeMillis();
 				graph = RandomGraphFactory.getInstance().getGraph(Integer.parseInt(ints.get(0)), Integer.parseInt(ints.get(2)));
 				
-				List<Cycle> cyclesBreadth = cr.restoreCycles(bfs.searchGraph(graph, graph.getRandomNode()).getEdgesNotInTree());
-				List<Cycle> cyclesDeep = cr.restoreCycles(dfs.searchGraph(graph, graph.getRandomNode()).getEdgesNotInTree());
+				GraphSearchResult bfsSearchResult = bfs.searchGraph(graph, graph.getRandomNode());
+				List<Cycle> cyclesBreadth = cr.restoreCycles(bfsSearchResult.getEdgesNotInTree());
+				GraphSearchResult dfsSearchResult = dfs.searchGraph(graph, graph.getRandomNode());
+				List<Cycle> cyclesDeep = cr.restoreCycles(dfsSearchResult.getEdgesNotInTree());
 				
 				boolean result = GraphUtils.getCyclomaticNumberForGraph(graph) == cyclesBreadth.size() && GraphUtils.getCyclomaticNumberForGraph(graph) == cyclesDeep.size(); 
 				ResultWriter.writeTestData(i, result, fileName);
