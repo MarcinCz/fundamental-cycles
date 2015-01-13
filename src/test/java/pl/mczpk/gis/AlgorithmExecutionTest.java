@@ -49,7 +49,6 @@ public class AlgorithmExecutionTest {
 		for(int i = 0; i < TEST_ITERATIONS; i++) {
 			int edgesToGenerate = minEdges + random.nextInt(maxEdges - minEdges) + 1;
 			generatedGraphs.add(RandomGraphFactory.getInstance().getGraph(NODES_IN_GENERATED_GRAPH, edgesToGenerate));
-			System.out.println("Iteration " + i + " done");
 		}
 		AlgorithmExecutionTime bfsExecutionTime = testForGraphSearch(new BreadthFirstSearch(), generatedGraphs);
 		AlgorithmExecutionTime dfsExecutionTime = testForGraphSearch(new DeepFirstSearch(), generatedGraphs);
@@ -66,14 +65,16 @@ public class AlgorithmExecutionTest {
 
 		long startTime;
 		long crTime;
-		for(Graph graph: generatedGraphs) {
-			GraphSearchResult searchResult = search.searchGraph(graph, graph.getRandomNode());
+		for(int i=0;i<generatedGraphs.size(); ++i) {
+			GraphSearchResult searchResult = search.searchGraph(generatedGraphs.get(i), generatedGraphs.get(i).getRandomNode());
 			startTime = System.currentTimeMillis();
 			cr.restoreCycles(searchResult.getEdgesNotInTree());
 			crTime = System.currentTimeMillis() - startTime;
 			
 			searchTimeSum += searchResult.getExecutionTime();
 			fullTimeSum += searchResult.getExecutionTime() + crTime;
+
+			System.out.println("Iteration " + i + " done");
 		}
 		
 		final double searchTime = (double) searchTimeSum / TEST_ITERATIONS;
