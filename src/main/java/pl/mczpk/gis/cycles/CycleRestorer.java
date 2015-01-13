@@ -54,7 +54,7 @@ public class CycleRestorer {
 			cycle.addNodeAtFront(firstNode.getParent());
 		}
 		
-		logger.trace("Restored cycle: " + cycle);
+//		logger.trace("Restored cycle: " + cycle);
 		return cycle;
 	}
 	

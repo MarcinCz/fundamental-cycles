@@ -45,7 +45,7 @@ public class RandomGraphFactory {
 		generateSpanningTree(graph);
 		generateRandomEdgesNotInTree(graph, edgesToGenerate - GraphUtils.getEdgesCountInTree(nodesToGenerate));
 		
-		logger.debug("Random graph generated: \n" + graph);
+//		logger.debug("Random graph generated: \n" + graph);
 		return graph;
 	}
 	
@@ -59,7 +59,7 @@ public class RandomGraphFactory {
 		generateSpanningTree(graph);
 		generateRandomEdgesNotInTree(graph, probabilityOfEdge);
 		
-		logger.debug("Random graph generated: \n" + graph);
+//		logger.debug("Random graph generated: \n" + graph);
 		return graph;
 	}
 	
