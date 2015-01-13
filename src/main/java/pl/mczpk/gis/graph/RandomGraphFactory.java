@@ -35,6 +35,10 @@ public class RandomGraphFactory {
 	public Graph getGraph(int nodesToGenerate, int edgesToGenerate) {
 		verifyParameters(nodesToGenerate, edgesToGenerate);
 		
+		if(edgesToGenerate == GraphUtils.getEdgesCountInFullGraph(nodesToGenerate)) {
+			return getFullGraph(nodesToGenerate);
+		}
+
 		Graph graph = new Graph();
 		
 		addNodesToGraph(graph, nodesToGenerate);
@@ -45,6 +49,7 @@ public class RandomGraphFactory {
 		return graph;
 	}
 	
+
 	public Graph getGraph(int nodesToGenerate, float probabilityOfEdge) {
 		verifyParameters(nodesToGenerate, probabilityOfEdge);
 		
@@ -133,5 +138,18 @@ public class RandomGraphFactory {
 					graph.addEdge(new Edge(node, node2));
 			}
 		}
+	}
+	
+	private Graph getFullGraph(int nodesToGenerate) {
+		Graph graph = new Graph();
+		addNodesToGraph(graph, nodesToGenerate);
+		for(Node node: graph.getNodes()) {
+			for(Node node2: graph.getNodes()) {
+				if(node != node2) {
+					graph.addEdge(new Edge(node, node2));
+				}
+			}
+		}
+		return graph;
 	}
 }
