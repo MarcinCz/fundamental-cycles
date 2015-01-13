@@ -1,5 +1,7 @@
 package pl.mczpk.gis;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.junit.Test;
@@ -18,12 +20,12 @@ public class AlgorithmExecutionTest {
 	/**
 	 * Liczba iteracji testu
 	 */
-	private final static int TEST_ITERATIONS = 10;
+	private final static int TEST_ITERATIONS = 20;
 	
 	/**
 	 * Liczba wierzchołków w generowanych grafach
 	 */
-	private final static int NODES_IN_GENERATED_GRAPH = 1000;
+	private final static int NODES_IN_GENERATED_GRAPH = 400;
 
 	private Random random = new Random();
 	private int minEdges = GraphUtils.getEdgesCountInTree(NODES_IN_GENERATED_GRAPH);
@@ -42,25 +44,28 @@ public class AlgorithmExecutionTest {
 	 */
 	@Test
 	public void testExecutionTimes() {
-		AlgorithmExecutionTime bfsExecutionTime = testForGraphSearch(new BreadthFirstSearch());
-		AlgorithmExecutionTime dfsExecutionTime = testForGraphSearch(new DeepFirstSearch());
+		List<Graph> generatedGraphs = new ArrayList<Graph>();
+		
+		for(int i = 0; i < TEST_ITERATIONS; i++) {
+			int edgesToGenerate = minEdges + random.nextInt(maxEdges - minEdges) + 1;
+			generatedGraphs.add(RandomGraphFactory.getInstance().getGraph(NODES_IN_GENERATED_GRAPH, edgesToGenerate));
+		}
+		AlgorithmExecutionTime bfsExecutionTime = testForGraphSearch(new BreadthFirstSearch(), generatedGraphs);
+		AlgorithmExecutionTime dfsExecutionTime = testForGraphSearch(new DeepFirstSearch(), generatedGraphs);
 		
 		System.out.println("BFS mean search execution time: " + bfsExecutionTime.getSearchExecutionTime());
 		System.out.println("BFS mean full algorithm execution time: " + bfsExecutionTime.getFullExecutionTime());
-		System.out.println("DFS mean search time: " + dfsExecutionTime.getSearchExecutionTime());
-		System.out.println("BFS mean full algorithm execution time: " + dfsExecutionTime.getFullExecutionTime());
+		System.out.println("DFS mean search execution time: " + dfsExecutionTime.getSearchExecutionTime());
+		System.out.println("DFS mean full algorithm execution time: " + dfsExecutionTime.getFullExecutionTime());
 	}
 	
-	private AlgorithmExecutionTime testForGraphSearch(GraphSearch search) {
+	private AlgorithmExecutionTime testForGraphSearch(GraphSearch search, List<Graph> generatedGraphs) {
 		long searchTimeSum = 0; 
 		long fullTimeSum = 0; 
 
 		long startTime;
 		long crTime;
-		for(int i = 0; i < TEST_ITERATIONS; i++) {
-			int edgesToGenerate = minEdges + random.nextInt(maxEdges - minEdges) + 1;
-			Graph graph = RandomGraphFactory.getInstance().getGraph(NODES_IN_GENERATED_GRAPH, edgesToGenerate);
-			
+		for(Graph graph: generatedGraphs) {
 			GraphSearchResult searchResult = search.searchGraph(graph, graph.getRandomNode());
 			startTime = System.currentTimeMillis();
 			cr.restoreCycles(searchResult.getEdgesNotInTree());
