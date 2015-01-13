@@ -20,12 +20,12 @@ public class AlgorithmExecutionTest {
 	/**
 	 * Liczba iteracji testu
 	 */
-	private final static int TEST_ITERATIONS = 20;
+	private final static int TEST_ITERATIONS = 100;
 	
 	/**
 	 * Liczba wierzchołków w generowanych grafach
 	 */
-	private final static int NODES_IN_GENERATED_GRAPH = 400;
+	private final static int NODES_IN_GENERATED_GRAPH = 500;
 
 	private Random random = new Random();
 	private int minEdges = GraphUtils.getEdgesCountInTree(NODES_IN_GENERATED_GRAPH);
@@ -49,6 +49,7 @@ public class AlgorithmExecutionTest {
 		for(int i = 0; i < TEST_ITERATIONS; i++) {
 			int edgesToGenerate = minEdges + random.nextInt(maxEdges - minEdges) + 1;
 			generatedGraphs.add(RandomGraphFactory.getInstance().getGraph(NODES_IN_GENERATED_GRAPH, edgesToGenerate));
+			System.out.println("Iteration " + i + " done");
 		}
 		AlgorithmExecutionTime bfsExecutionTime = testForGraphSearch(new BreadthFirstSearch(), generatedGraphs);
 		AlgorithmExecutionTime dfsExecutionTime = testForGraphSearch(new DeepFirstSearch(), generatedGraphs);

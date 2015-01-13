@@ -52,16 +52,16 @@ public class App
 			if (ints.get(0).equals("") || ints.get(0).equals("0"))
     			throw new IllegalStateException("Number of nodes is incorrect");
 			if (ints.get(1).equals("") || ints.get(1).equals("0"))
-    			throw new IllegalStateException("Number of iterations is incorrect");
-    		if (ints.get(1).equals("") || ints.get(1).equals(""))
     			throw new IllegalStateException("Number of edges is incorrect");
+    		if (ints.get(2).equals("") || ints.get(2).equals("0"))
+    			throw new IllegalStateException("Number of iterations is incorrect");
     		
 			 File dir = new File("results");
 			 dir.mkdir();
 			 
-			for(int i = 0; i < Integer.parseInt(ints.get(1)); ++i ){
+			for(int i = 0; i < Integer.parseInt(ints.get(2)); ++i ){
 				fileName = "results/" + java.lang.System.currentTimeMillis();
-				graph = RandomGraphFactory.getInstance().getGraph(Integer.parseInt(ints.get(0)), Integer.parseInt(ints.get(2)));
+				graph = RandomGraphFactory.getInstance().getGraph(Integer.parseInt(ints.get(0)), Integer.parseInt(ints.get(1)));
 				
 				GraphSearchResult bfsSearchResult = bfs.searchGraph(graph, graph.getRandomNode());
 				List<Cycle> cyclesBreadth = cr.restoreCycles(bfsSearchResult.getEdgesNotInTree());
