@@ -20,12 +20,12 @@ public class AlgorithmExecutionTest {
 	/**
 	 * Liczba iteracji testu
 	 */
-	private final static int TEST_ITERATIONS = 10;
+	private final static int TEST_ITERATIONS = 100;
 	
 	/**
 	 * Liczba wierzchołków w generowanych grafach
 	 */
-	private final static int NODES_IN_GENERATED_GRAPH = 100;
+	private final static int NODES_IN_GENERATED_GRAPH = 600;
 
 	private Random random = new Random();
 	private int minEdges = GraphUtils.getEdgesCountInTree(NODES_IN_GENERATED_GRAPH);
