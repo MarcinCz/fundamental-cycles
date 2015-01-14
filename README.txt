@@ -24,3 +24,9 @@ przyk³ad struktury pliku wejœciowego *.graph:
 1	2,3
 2	1,3
 3	1,2
+
+
+Sposób budowania projektu
+W katalogu g³ównym projektu nale¿y wywo³aæ komendê
+>mvn install
+Program bêdzie dostêpny w katalogu /target
