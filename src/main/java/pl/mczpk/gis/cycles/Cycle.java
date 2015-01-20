@@ -1,12 +1,17 @@
 package pl.mczpk.gis.cycles;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import pl.mczpk.gis.graph.model.Node;
 
 public class Cycle {
-	private LinkedList<Node> nodes = new LinkedList<Node>();
+	private List<Node> nodes;
+
+	
+	public Cycle() {
+		this.nodes = new ArrayList<Node>();
+	}
 
 	public List<Node> getNodes() {
 		return nodes;
@@ -17,15 +22,15 @@ public class Cycle {
 	}
 	
 	public void addNodeAtFront(Node node) {
-		nodes.push(node);
+		nodes.add(nodes.size(), node);
 	}
 	
 	public Node getNodeAtFront() {
-		return nodes.getFirst();
+		return nodes.get(0);
 	}
 	
 	public void removeNodeAtFront() {
-		nodes.removeFirst();
+		nodes.remove(0);
 	}
 	
 	@Override

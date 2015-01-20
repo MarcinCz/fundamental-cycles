@@ -13,7 +13,7 @@ public class RandomGraphFactoryTest extends GraphFactoryTestBase {
 	
 	@Test
 	public void testGeneratedFullGraph() {
-		int edgesCount = 10;
+		int edgesCount = 1000;
 		Graph generatedGraph = testee.getGraph(edgesCount, GraphUtils.getEdgesCountInFullGraph(edgesCount));
 		
 		assertEquals(edgesCount, generatedGraph.getNodesCount());

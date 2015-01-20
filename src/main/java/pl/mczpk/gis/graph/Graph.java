@@ -2,6 +2,7 @@ package pl.mczpk.gis.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
@@ -12,6 +13,7 @@ import pl.mczpk.gis.graph.model.Node;
 
 public class Graph {
 	private Map<Node, AdjecencyList> adjecencyListsMap = new HashMap<Node, AdjecencyList>();
+	private List<Node> nodes = new ArrayList<Node>();
 	private int edgesCount = 0;
 
 	public void addEdge(Edge edge) {
@@ -32,6 +34,7 @@ public class Graph {
 	 */
 	public void addNode(Node node) {
 		if(!adjecencyListsMap.containsKey(node)) {
+			nodes.add(node);
 			adjecencyListsMap.put(node, new AdjecencyList());
 		}
 	}
@@ -71,7 +74,7 @@ public class Graph {
 	
 	public Node getRandomNode() {
 		int nodeNumber = new Random().nextInt(getNodesCount());
-		return new ArrayList<Node>(getNodes()).get(nodeNumber);
+		return nodes.get(nodeNumber);
 	}
 	
 	@Override

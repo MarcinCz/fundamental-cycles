@@ -3,17 +3,15 @@ package pl.mczpk.gis.cycles;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import pl.mczpk.gis.graph.model.Edge;
 import pl.mczpk.gis.graph.model.Node;
 
 public class CycleRestorer {
 
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private List<Cycle> cycles;
 
 	public List<Cycle> restoreCycles(List<Edge> edges) {
-		List<Cycle> cycles = new ArrayList<Cycle>();
+		cycles = new ArrayList<Cycle>();
 		
 		for(Edge edge: edges) {
 			cycles.add(restoreCycle(edge)); 
@@ -54,8 +52,8 @@ public class CycleRestorer {
 			cycle.addNodeAtFront(firstNode.getParent());
 		}
 		
-//		logger.trace("Restored cycle: " + cycle);
 		return cycle;
 	}
+
 	
 }
